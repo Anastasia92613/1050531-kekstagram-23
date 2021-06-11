@@ -6,24 +6,24 @@ function getRandomNumber(min, max) {
     max = max * -1;
   }
   if (min > max) {
-    let temp = min;
+    const TEMP = min;
     min = max;
-    max = temp;
+    max = TEMP;
   }
-  if (min == max) {
+  if (min === max) {
     min = 0;
   }
   return Math.floor(Math.random() * (max - min + 1)) + min;
-};
+}
 getRandomNumber(-5, 0);
 //источник метода для возврата целого числа https://myrusakov.ru/js-random-numbers.html
 
 function stringLength(string, max) {
-  let count = string.length;
-  if (count <= max) {
+  const COUNT = string.length;
+  if (COUNT <= max) {
     return true;
   }
   return false;
-};
+}
 
 stringLength('Длина строки', 140);
