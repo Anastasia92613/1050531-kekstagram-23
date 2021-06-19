@@ -69,19 +69,21 @@ const NAME = [
 const SIMILAR_POST_COUNT = 25;
 
 //Создание случайного поста в Кекстограмме
-const createPost = () => {
-  return {
+const createPost = () => ({
+  id: getRandomNumber(1, 25),
+  url: 'photos/' + getRandomNumber(1, 25) + '.jpg',
+  description: DESCRIPTION_PHOTO[getRandomNumber(0, 10)],
+  likes: getRandomNumber(15, 200),
+  comments: {
     id: getRandomNumber(1, 25),
-    url: 'photos/' + getRandomNumber(1, 25) + '.jpg',
-    description: DESCRIPTION_PHOTO[getRandomNumber(0, 10)],
-    likes: getRandomNumber(15, 200),
-    comments: {
-      id: getRandomNumber(1, 25),
-      avatar: 'img/avatar-' + getRandomNumber(1, 6) + '.svg',
-      message: MESSAGE[getRandomNumber(0, 5)] + MESSAGE[getRandomNumber(0, 5)],
-      name: NAME[getRandomNumber(0, 9)],
-    },
-  };
-};
+    avatar: 'img/avatar-' + getRandomNumber(1, 6) + '.svg',
+    message: MESSAGE[getRandomNumber(0, 5)] + MESSAGE[getRandomNumber(0, 5)],
+    name: NAME[getRandomNumber(0, 9)],
+  },
 
+});
+
+//Создание массива с постами
 const similarPost = new Array(SIMILAR_POST_COUNT).fill(null).map(() => createPost());
+
+console.log(similarPost);
