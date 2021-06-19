@@ -45,12 +45,12 @@ const DESCRIPTION_PHOTO = [
 ];
 
 const MESSAGE = [
-'Всё отлично!',
-'В целом всё неплохо. Но не всё.',
-'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
-'Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.',
-'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
-'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!',
+  'Всё отлично!',
+  'В целом всё неплохо. Но не всё.',
+  'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
+  'Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.',
+  'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
+  'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!',
 ];
 
 const NAME = [
@@ -71,15 +71,15 @@ const SIMILAR_POST_COUNT = 25;
 //Создание случайного поста в Кекстограмме
 const createPost = () => {
   return {
-    id: getRandomNumber (1, 25),
-    url: 'photos/' + getRandomNumber (1, 25) + '.jpg',
-    description: DESCRIPTION_PHOTO[getRandomNumber (0, 10)],
-    likes: getRandomNumber (15, 200),
+    id: getRandomNumber(1, 25),
+    url: 'photos/' + getRandomNumber(1, 25) + '.jpg',
+    description: DESCRIPTION_PHOTO[getRandomNumber(0, 10)],
+    likes: getRandomNumber(15, 200),
     comments: {
-      id: getRandomNumber (1, 25),
-      avatar:'img/avatar-' + getRandomNumber (1, 6) + '.svg',
-      message: MESSAGE[getRandomNumber (0, 5)] + MESSAGE[getRandomNumber (0, 5)],
-      name: NAME[getRandomNumber (0, 9)],
+      id: getRandomNumber(1, 25),
+      avatar: 'img/avatar-' + getRandomNumber(1, 6) + '.svg',
+      message: MESSAGE[getRandomNumber(0, 5)] + MESSAGE[getRandomNumber(0, 5)],
+      name: NAME[getRandomNumber(0, 9)],
     }
   }
 };
