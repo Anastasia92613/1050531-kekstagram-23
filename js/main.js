@@ -80,8 +80,8 @@ const createPost = () => {
       avatar: 'img/avatar-' + getRandomNumber(1, 6) + '.svg',
       message: MESSAGE[getRandomNumber(0, 5)] + MESSAGE[getRandomNumber(0, 5)],
       name: NAME[getRandomNumber(0, 9)],
-    }
-  }
+    },
+  };
 };
 
 const similarPost = new Array(SIMILAR_POST_COUNT).fill(null).map(() => createPost());
