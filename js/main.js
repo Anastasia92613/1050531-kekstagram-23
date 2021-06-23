@@ -86,4 +86,4 @@ const createPost = () => ({
 //Создание массива с постами
 const similarPost = new Array(SIMILAR_POST_COUNT).fill(null).map(() => createPost());
 
-console.log(similarPost);
+similarPost;
