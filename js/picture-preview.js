@@ -4,7 +4,6 @@ const SIMILAR_POST_COUNT = 26;
 
 //Создание массива с постами
 const similarPost = new Array(SIMILAR_POST_COUNT).fill(null).map(() => createPost());
-
 //Создание превью
 const pictureListElement = document.querySelector('.pictures');
 const similarPreviewPicture = document.querySelector('#picture').content.querySelector('.picture');
