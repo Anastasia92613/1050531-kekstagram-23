@@ -3,7 +3,7 @@ import { getRandomNumber } from './util.js';
 
 //Создание случайного поста в Кекстограмме
 const createPost = () => {
-  const randomLengthArray = new Array(getRandomNumber(1, 25)).fill(null);
+  const randomLengthArray = new Array(getRandomNumber(1, 10)).fill(null);
   return {
     id: getRandomNumber(1, 25),
     url: `photos/${getRandomNumber(1, 25)}.jpg`,
