@@ -24,22 +24,30 @@ pictureListElement.appendChild(pictureListFragment);
 
 //поиск миниатюр
 const previewPictures = document.querySelectorAll('.picture');
+const postComments = [];
 
 //Создание фрагмента с комментариями
-const createFragmentComments = function () {
-  const postComments = new Array().fill(null);
+// const createFragmentComments = function () {
+//   const postComments = new Array().fill(null);
 
-  for (let i = 0; i < similarPost.length; i++) {
-    const fragment = document.createDocumentFragment();
-    const commentLis = similarPost[i].comments;
-    for (let j = 0; j < commentLis.length; j++) {
-      const itemComment = getComment(commentLis[j].message, commentLis[j].avatar);
-      fragment.appendChild(itemComment);
-    }
-    postComments[i] = fragment;
-  }
-  return postComments;
-};
+//   for (let i = 0; i < similarPost.length; i++) {
+
+//     for (let j = 0; j < commentLis.length; j++) {
+//       const itemComment = getComment(commentLis[j].message, commentLis[j].avatar);
+//       fragment.appendChild(itemComment);
+//     }
+//     postComments[i] = fragment;
+//   }
+//   return postComments;
+// };
+
+similarPost.forEach((post)=> {
+  const fragment = document.createDocumentFragment();
+  const commentLis = post.comments;
+  commentLis.forEach((comment) => fragment.appendChild(getComment(comment.message, comment.avatar)));
+  postComments.push(fragment);
+});
+
 
 //Добавление описание к фото
 const createDescriptionPhoto = function () {
@@ -49,7 +57,6 @@ const createDescriptionPhoto = function () {
   }
   return descriptionsPhoto;
 };
-// console.log(createDescriptionPhoto());
 
 //Подставление данных под большим изображением
 for (let i = 0; i < previewPictures.length; i++) {
@@ -59,6 +66,8 @@ for (let i = 0; i < previewPictures.length; i++) {
     const countComm = previewPictures[i].querySelector('.picture__comments').textContent;
     const imageSRC = previewPictures[i].querySelector('.picture__img').src;
 
-    getBigPicture(imageSRC, countLikes, countComm, createFragmentComments()[i], createDescriptionPhoto()[i]);
+    getBigPicture(imageSRC, countLikes, countComm, postComments[i], createDescriptionPhoto()[i]);
+
   });
 }
+
