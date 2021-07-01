@@ -41,7 +41,6 @@ const descriptionPhoto = bigPicture.querySelector('.social__caption');
 
 
 const getBigPicture = function (url, countLikes, countComm, comments, description) {
-  console.log(comments.children);
   urlBigPicture.src = url;
   likesBigPicture.textContent = countLikes;
   countComment.textContent = countComm;
