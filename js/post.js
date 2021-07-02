@@ -2,10 +2,10 @@ import { DESCRIPTION_PHOTO, MESSAGE, NAME } from './data.js';
 import { getRandomNumber } from './util.js';
 
 //Создание случайного поста в Кекстограмме
-const createPost = () => {
+const createPost = (key) => {
   const randomLengthArray = new Array(getRandomNumber(1, 10)).fill(null);
   return {
-    id: getRandomNumber(1, 25),
+    id: key,
     url: `photos/${getRandomNumber(1, 25)}.jpg`,
     description: DESCRIPTION_PHOTO[getRandomNumber(0, 10)],
     likes: getRandomNumber(15, 200),

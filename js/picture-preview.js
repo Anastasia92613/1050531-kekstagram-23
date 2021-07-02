@@ -1,10 +1,11 @@
 import { createPost } from './post.js';
-import { openingBigPicture, getBigPicture, getComment} from './big-picture.js';
+import { openingBigPicture, getBigPicture, getComment } from './big-picture.js';
 
 const SIMILAR_POST_COUNT = 26;
 
 //Создание массива с постами
-const similarPost = new Array(SIMILAR_POST_COUNT).fill(null).map(() => createPost());
+const similarPost = new Array(SIMILAR_POST_COUNT).fill(null).map((el, key) => createPost(key));
+
 //Создание превью
 const pictureListElement = document.querySelector('.pictures');
 const similarPreviewPicture = document.querySelector('#picture').content.querySelector('.picture');
@@ -24,50 +25,34 @@ pictureListElement.appendChild(pictureListFragment);
 
 //поиск миниатюр
 const previewPictures = document.querySelectorAll('.picture');
-const postComments = [];
 
 //Создание фрагмента с комментариями
-// const createFragmentComments = function () {
-//   const postComments = new Array().fill(null);
-
-//   for (let i = 0; i < similarPost.length; i++) {
-
-//     for (let j = 0; j < commentLis.length; j++) {
-//       const itemComment = getComment(commentLis[j].message, commentLis[j].avatar);
-//       fragment.appendChild(itemComment);
-//     }
-//     postComments[i] = fragment;
-//   }
-//   return postComments;
-// };
-
-similarPost.forEach((post)=> {
-  const fragment = document.createDocumentFragment();
-  const commentLis = post.comments;
-  commentLis.forEach((comment) => fragment.appendChild(getComment(comment.message, comment.avatar)));
-  postComments.push(fragment);
-});
-
+const createFragmentComments = () => {
+  const postComments = [];
+  similarPreview.forEach((post) => {
+    const fragment = document.createDocumentFragment();
+    const commentLis = post.comments;
+    commentLis.forEach((comment) => fragment.appendChild(getComment(comment.message, comment.avatar)));
+    postComments.push(fragment);
+  });
+  return postComments;
+};
 
 //Добавление описание к фото
-const createDescriptionPhoto = function () {
-  const descriptionsPhoto = new Array().fill(null);
-  for (let i = 0; i < similarPost.length; i++) {
-    descriptionsPhoto[i] = similarPost[i].description;
-  }
+const createDescriptionPhoto = () => {
+  const descriptionsPhoto = [];
+  similarPreview.forEach((post) => descriptionsPhoto.push(post.description));
   return descriptionsPhoto;
 };
 
-//Подставление данных под большим изображением
-for (let i = 0; i < previewPictures.length; i++) {
-  previewPictures[i].addEventListener('click', () => {
+previewPictures.forEach((preview, index) => {
+  preview.addEventListener('click', () => {
     openingBigPicture();
-    const countLikes = previewPictures[i].querySelector('.picture__likes').textContent;
-    const countComm = previewPictures[i].querySelector('.picture__comments').textContent;
-    const imageSRC = previewPictures[i].querySelector('.picture__img').src;
-
-    getBigPicture(imageSRC, countLikes, countComm, postComments[i], createDescriptionPhoto()[i]);
-
+    const imageSRC = preview.querySelector('.picture__img').src;
+    const countLikes = preview.querySelector('.picture__likes').textContent;
+    const countComm = preview.querySelector('.picture__comments').textContent;
+    const fragmentComments = createFragmentComments()[index];
+    const descriptionPhoto = createDescriptionPhoto()[index];
+    getBigPicture(imageSRC, countLikes, countComm, fragmentComments, descriptionPhoto);
   });
-}
-
+});

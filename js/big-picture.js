@@ -38,8 +38,6 @@ const commentConteiner = bigPicture.querySelector('.social__comments');
 const socialComment = bigPicture.querySelector('.social__comment');
 const descriptionPhoto = bigPicture.querySelector('.social__caption');
 
-
-
 const getBigPicture = function (url, countLikes, countComm, comments, description) {
   urlBigPicture.src = url;
   likesBigPicture.textContent = countLikes;
@@ -56,4 +54,4 @@ const getComment = function (comment, avatar) {
   return element;
 };
 
-export { openingBigPicture, getBigPicture, getComment};
+export { openingBigPicture, getBigPicture, getComment };
