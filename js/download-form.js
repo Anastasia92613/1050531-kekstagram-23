@@ -26,7 +26,7 @@ downloadInput.addEventListener('change', (evt) => {
 const sharp = '#';
 const space = ' ';
 
-const createHashArrayTags = (stringToSplit, separator, space) => {
+const createHashArrayTags = (stringToSplit, separator, spaceDelimeter) => {
   let arrayHashTags = [];
   const arrayTag = [];
   arrayHashTags = stringToSplit.split(separator);
@@ -34,7 +34,7 @@ const createHashArrayTags = (stringToSplit, separator, space) => {
   arrayHashTags.forEach((word) => {
     arrayTag.push(`#${word}`);
   });
-  const stringHashTag = arrayTag.join(space);
+  const stringHashTag = arrayTag.join(spaceDelimeter);
   return stringHashTag;
 };
 
@@ -68,7 +68,7 @@ const countingHashTag = (string, separator) => {
 };
 
 //Валидация хэштегов
-hashTagsInput.addEventListener('input', (evt) => {
+hashTagsInput.addEventListener('input', () => {
   const re = new RegExp('#[A-Za-zА-Яа-я]{1,19}');
   const inputValue = hashTagsInput.value.toLowerCase();
   if (!re.test(inputValue)) {
