@@ -1,8 +1,19 @@
+import { buttonClose, isEscEvent } from './util.js';
+
 const bigPicture = document.querySelector('.big-picture');
 const commentCount = bigPicture.querySelector('.social__comment-count');
 const commentsLoader = bigPicture.querySelector('.comments-loader');
 const modalOpen = document.querySelector('body');
 const bigPictureCancel = document.querySelector('.big-picture__cancel');
+
+//Удаление классов для закрытия большого изображаения
+function deliClassPhoto() {
+  bigPicture.classList.add('hidden');
+  commentCount.classList.remove('hidden');
+  commentsLoader.classList.remove('hidden');
+  modalOpen.classList.remove('modal-open');
+}
+
 
 //Открытие большого изображения
 const openingBigPicture = function () {
@@ -10,24 +21,8 @@ const openingBigPicture = function () {
   commentCount.classList.add('hidden');
   commentsLoader.classList.add('hidden');
   modalOpen.classList.add('modal-open');
+  document.removeEventListener('keydown', buttonClose(bigPictureCancel, deliClassPhoto), isEscEvent(deliClassPhoto));
 };
-
-//Закрытие большого изображения
-bigPictureCancel.addEventListener('click', () => {
-  bigPicture.classList.add('hidden');
-  commentCount.classList.remove('hidden');
-  commentsLoader.classList.remove('hidden');
-  modalOpen.classList.remove('modal-open');
-});
-
-document.addEventListener('keydown', (evt) => {
-  if (evt.keyCode === 27) {
-    bigPicture.classList.add('hidden');
-    commentCount.classList.remove('hidden');
-    commentsLoader.classList.remove('hidden');
-    modalOpen.classList.remove('modal-open');
-  }
-});
 
 //Подставление создание комментариев
 const picture = bigPicture.querySelector('.big-picture__img');
@@ -54,4 +49,4 @@ const getComment = function (comment, avatar) {
   return element;
 };
 
-export { openingBigPicture, getBigPicture, getComment };
+export { openingBigPicture, getBigPicture, getComment, deliClassPhoto };

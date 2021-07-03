@@ -16,7 +16,7 @@ function getRandomNumber(min, max) {
   }
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
-// getRandomNumber(-5, 0);
+
 //источник метода для возврата целого числа https://myrusakov.ru/js-random-numbers.html
 
 //проверка на максимальную длину строки
@@ -28,6 +28,20 @@ function stringLength(string, max) {
   return false;
 }
 
-// stringLength('Длина строки', 140);
+//Кнопка закрытия
+const buttonClose = (selector, removeClass) => {
+  selector.addEventListener('click', () => {
+    removeClass();
+  });
+};
 
-export { getRandomNumber, stringLength };
+//Закрытие по Esc
+const isEscEvent = (removeClass) => {
+  document.addEventListener('keydown', (evt) => {
+    if (evt.keyCode === 27) {
+      removeClass();
+    }
+  });
+};
+
+export { getRandomNumber, stringLength, buttonClose, isEscEvent};
