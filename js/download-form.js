@@ -29,13 +29,25 @@ const space = ' ';
 const createHashArrayTags = (stringToSplit, separator, spaceDelimeter) => {
   let arrayHashTags = [];
   const arrayTag = [];
-  arrayHashTags = stringToSplit.split(separator);
+  arrayHashTags = stringToSplit.value.split(separator);
   arrayHashTags.splice(0, 1);
   arrayHashTags.forEach((word) => {
     arrayTag.push(`#${word}`);
   });
   const stringHashTag = arrayTag.join(spaceDelimeter);
   return stringHashTag;
+};
+
+//Создание массива тегов
+const createArrayTags = (stringToSplit, separator) => {
+  let previewArrayTags = [];
+  const arrayTag = [];
+  previewArrayTags = stringToSplit.value.split(separator);
+  previewArrayTags.splice(0, 1);
+  previewArrayTags.forEach((word) => {
+    arrayTag.push(`#${word}`);
+  });
+  return arrayTag;
 };
 
 //Проверка одинаковых хэштегов
@@ -48,7 +60,7 @@ const delSpace = (array) => {
 };
 
 const comparisonHashTag = (arrayHashTags, separator) => {
-  let arrayTags = arrayHashTags.split(separator);
+  let arrayTags = arrayHashTags.value.split(separator);
   arrayTags.splice(0, 1);
   arrayTags = delSpace(arrayTags);
   for (let index = 0; index < arrayTags.length; index++) {
@@ -68,17 +80,24 @@ const countingHashTag = (string, separator) => {
 };
 
 //Валидация хэштегов
-hashTagsInput.addEventListener('input', () => {
+hashTagsInput.addEventListener('input', (event) => {
   const re = new RegExp('#[A-Za-zА-Яа-я]{1,19}');
-  const inputValue = hashTagsInput.value.toLowerCase();
+  // console.log(hashTagsInput);
+  // let inputValue = hashTagsInput.value.toLowerCase();
+  let inputValue = event.target;
+  inputValue = createArrayTags(inputValue,sharp, space);
+  // console.log(inputValue);
   if (!re.test(inputValue)) {
-    hashTagsInput.setCustomValidity('Хэштег может состоять только из букв и чисел, должен начинаться с символа #, и не должен превышать 20 символов');
+    inputValue.setCustomValidity('Хэштег может состоять только из букв и чисел, должен начинаться с символа #, и не должен превышать 20 символов');
+    // console.log('Хэштег может состоять только из букв и чисел, должен начинаться с символа #, и не должен превышать 20 символов');
   } else if (comparisonHashTag(inputValue, sharp)) {
-    hashTagsInput.setCustomValidity('Один и тот же хэштег не может быть использован дважды');
+    inputValue.setCustomValidity('Один и тот же хэштег не может быть использован дважды');
+    // console.log('Один и тот же хэштег не может быть использован дважды');
   } else if (countingHashTag(inputValue, sharp)) {
-    hashTagsInput.setCustomValidity('Хэштегов не может быть больше пяти');
+    inputValue.setCustomValidity('Хэштегов не может быть больше пяти');
+    // console.log('Хэштегов не может быть больше пяти');
   } else {
-    hashTagsInput.setCustomValidity('');
+    inputValue.setCustomValidity('');
     createHashArrayTags(inputValue, sharp, space);
   }
 });
