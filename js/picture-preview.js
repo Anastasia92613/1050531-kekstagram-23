@@ -1,8 +1,8 @@
 import { createPost } from './post.js';
-import { openingBigPicture, getBigPicture, getComment } from './big-picture.js';
+import { openingBigPicture, getBigPicture, getComment, addComments, countingСomments, getCountComment } from './big-picture.js';
 
 const SIMILAR_POST_COUNT = 26;
-
+let clickIndex = 0;
 //Создание массива с постами
 const similarPost = new Array(SIMILAR_POST_COUNT).fill(null).map((el, key) => createPost(key));
 
@@ -26,17 +26,43 @@ pictureListElement.appendChild(pictureListFragment);
 //поиск миниатюр
 const previewPictures = document.querySelectorAll('.picture');
 
+const commentsLoader = document.querySelector('.comments-loader');
+let comIndex = 0;
+const countComment = 5;
+
+//Подсчет количества показанных комментариев
+const coutigComm = (count) => {
+  getCountComment(count);
+};
+
+//Создание пяти комментариев
+const createFiveComment = (comments) => {
+  const fragment = document.createDocumentFragment();
+  const commentList = comments.slice(comIndex, countComment + comIndex);
+  if (comments.length <= countComment + comIndex) {
+    coutigComm(comments.length);
+  } else {
+    coutigComm(countComment + comIndex);
+  }
+  commentList.forEach((comment) => fragment.appendChild(getComment(comment.message, comment.avatar, comment.name)));
+  countingСomments(comments.length, countComment + comIndex);
+  return fragment;
+};
+
 //Создание фрагмента с комментариями
 const createFragmentComments = () => {
   const postComments = [];
   similarPreview.forEach((post) => {
-    const fragment = document.createDocumentFragment();
-    const commentLis = post.comments;
-    commentLis.forEach((comment) => fragment.appendChild(getComment(comment.message, comment.avatar)));
-    postComments.push(fragment);
+    postComments.push(createFiveComment(post.comments));
   });
   return postComments;
 };
+
+commentsLoader.addEventListener('click', () => {
+  comIndex += countComment;
+  const lastFiveComment = createFiveComment(similarPreview[clickIndex].comments);
+  addComments(lastFiveComment);
+});
 
 //Добавление описание к фото
 const createDescriptionPhoto = () => {
@@ -47,12 +73,20 @@ const createDescriptionPhoto = () => {
 
 previewPictures.forEach((preview, index) => {
   preview.addEventListener('click', () => {
+    comIndex = 0;
+    clickIndex = index;
     openingBigPicture();
     const imageSRC = preview.querySelector('.picture__img').src;
     const countLikes = preview.querySelector('.picture__likes').textContent;
     const countComm = preview.querySelector('.picture__comments').textContent;
     const fragmentComments = createFragmentComments()[index];
     const descriptionPhoto = createDescriptionPhoto()[index];
+    if (countComm <= countComment) {
+      getCountComment(countComm);
+    } else {
+      getCountComment(countComment);
+    }
     getBigPicture(imageSRC, countLikes, countComm, fragmentComments, descriptionPhoto);
+    countingСomments(countComm , countComment);
   });
 });
