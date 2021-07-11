@@ -1,4 +1,5 @@
 import { buttonClose, isEscEvent } from './util.js';
+import './slider.js';
 
 const bigPicture = document.querySelector('.big-picture');
 const commentCount = bigPicture.querySelector('.social__comment-count');
