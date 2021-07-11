@@ -140,7 +140,7 @@ const changeFilter = (evt) => {
 
 formEffects.addEventListener('change', changeFilter);
 
-sliderEffect.noUiSlider.on('update', (_, hadle, unencoded) => {
+sliderEffect.noUiSlider.on('update', (value, hadle, unencoded) => {
   handleEffect.value = unencoded[hadle];
   const effectFilet = {
     none: 'none',
