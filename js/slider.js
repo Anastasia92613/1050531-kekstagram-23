@@ -26,6 +26,8 @@ const getReduceValue = () => {
   return reduceCurrentValue;
 };
 
+console.log(reduceCurrentValue);
+
 const getZoomValue = () => {
   const value = +valueSizePicture.value.replace('%', '');
   if (value >= RANGE_MAX) {
