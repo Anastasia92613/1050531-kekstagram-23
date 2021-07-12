@@ -1,5 +1,6 @@
 import { createPost } from './post.js';
 import { openingBigPicture, getBigPicture, getComment, addComments, countingСomments, getCountComment } from './big-picture.js';
+import './slider.js';
 
 const SIMILAR_POST_COUNT = 26;
 let clickIndex = 0;
