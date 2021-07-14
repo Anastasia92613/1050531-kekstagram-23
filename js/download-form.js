@@ -1,4 +1,7 @@
 import { buttonClose, isEscEvent } from './util.js';
+import { showAlert } from './util.js';
+import { resetFilter } from './slider.js';
+import { sendPost } from './api.js';
 
 const form = document.querySelector('#upload-select-image');
 const downloadInput = form.querySelector('.img-upload__input');
@@ -6,20 +9,32 @@ const formEditPhoto = form.querySelector('.img-upload__overlay');
 const modalOpen = document.querySelector('body');
 const buttonCancel = form.querySelector('#upload-cancel');
 const hashTagsInput = form.querySelector('.text__hashtags');
+const description = form.querySelector('.text__description');
 
-//Открытие формы загрузки
+//Закрытие формы загрузки
 const delClassForm = () => {
   formEditPhoto.classList.add('hidden');
   modalOpen.classList.remove('modal-open');
+  downloadInput.value = '';
+  hashTagsInput.value = '';
+  description.value = '';
+  resetFilter();
 };
 
-//Закрытие формы загруки
+//Отправка данных
 downloadInput.addEventListener('change', (evt) => {
   evt.preventDefault();
   formEditPhoto.classList.remove('hidden');
   modalOpen.classList.add('modal-open');
   document.removeEventListener('keydown', buttonClose(buttonCancel, delClassForm), isEscEvent(delClassForm));
-  downloadInput.value = '';
+  if (downloadInput.files[0]) {
+    const loadFile = new FileReader();
+    loadFile.addEventListener('load', () => {
+      const previewPhoto = form.querySelector('.img-upload__preview')?.children[0];
+      previewPhoto.src = loadFile.result;
+    }, false);
+    loadFile.readAsDataURL(downloadInput.files[0]);
+  }
 });
 
 // Перевод строки в массив
@@ -115,7 +130,6 @@ hashTagsInput.addEventListener('input', (event) => {
     input.setCustomValidity('');
     createHashArrayTags(inputValue, SHARP, SPACE);
   }
-
   input.reportValidity();
 });
 
@@ -125,3 +139,14 @@ hashTagsInput.addEventListener('keydown', (evt) => {
     evt.stopPropagation();
   }
 });
+
+
+
+//Отправка формы
+form.addEventListener('submit', (evt) => {
+  evt.preventDefault();
+  // const formData = new FormData(evt.target);
+  sendPost(new FormData(evt.target));
+});
+
+export { delClassForm };
