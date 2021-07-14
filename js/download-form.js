@@ -1,5 +1,4 @@
 import { buttonClose, isEscEvent } from './util.js';
-import { showAlert } from './util.js';
 import { resetFilter } from './slider.js';
 import { sendPost } from './api.js';
 
@@ -139,8 +138,6 @@ hashTagsInput.addEventListener('keydown', (evt) => {
     evt.stopPropagation();
   }
 });
-
-
 
 //Отправка формы
 form.addEventListener('submit', (evt) => {
