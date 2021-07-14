@@ -30,7 +30,7 @@ downloadInput.addEventListener('change', (evt) => {
   if (downloadInput.files[0]) {
     const loadFile = new FileReader();
     loadFile.addEventListener('load', () => {
-      const previewPhoto = form.querySelector('.img-upload__preview')?.children[0];
+      const previewPhoto = form.querySelector('.img-upload__preview').children[0];
       previewPhoto.src = loadFile.result;
     }, false);
     loadFile.readAsDataURL(downloadInput.files[0]);
