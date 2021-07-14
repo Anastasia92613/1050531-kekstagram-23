@@ -118,6 +118,13 @@ const step = {
 };
 
 let currentEffect = 'none';
+
+const resetFilter = () => {
+  currentEffect = 'none';
+  sliderEffect.classList.add('hidden');
+  picture.style.filter = currentEffect;
+};
+
 const changeFilter = (evt) => {
   const className = `effects__preview--${evt.target.value}`;
   picture.className = '';
@@ -153,3 +160,5 @@ sliderEffect.noUiSlider.on('update', (value, hadle, unencoded) => {
   picture.style.filter = effectFilet[currentEffect];
 
 });
+
+export {resetFilter};

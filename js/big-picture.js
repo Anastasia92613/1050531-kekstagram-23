@@ -57,7 +57,7 @@ const getComment = function (comment, avatar, nameCommentator) {
   return element;
 };
 
-// //Отображение не более 5 комментариев
+//Отображение не более 5 комментариев
 const countingСomments = (count, countView) => {
   if (count <= countView) {
     commentsLoader.classList.add('hidden');
