@@ -1,14 +1,12 @@
 import { openingBigPicture, getBigPicture, getComment, addComments, countingСomments, getCountComment } from './big-picture.js';
 import './slider.js';
+// import { debounce } from './utils/debounce.js';
 
 let clickIndex = 0;
-//Создание массива с постами
-
 let similarPreview = [];
 
-const getPost = (posts) => {
-  similarPreview = posts;
-
+const createPost = (arrayPosts) => {
+  similarPreview = arrayPosts;
 
   //Создание превью
   const pictureListElement = document.querySelector('.pictures');
@@ -16,15 +14,29 @@ const getPost = (posts) => {
   const pictureListFragment = document.createDocumentFragment();
 
   //перебор массива и создание превью
-  similarPreview.forEach(({ url, likes, comments }) => {
-    const previewElement = similarPreviewPicture.cloneNode(true);
-    previewElement.querySelector('.picture__img').src = url;
-    previewElement.querySelector('.picture__likes').textContent = likes;
-    previewElement.querySelector('.picture__comments').textContent = comments.length;
-    pictureListElement.appendChild(previewElement);
-  });
+  const createPreviewPhoto = () => {
+    const test = document.querySelectorAll('.picture');
+    test.forEach((element) => {
+      element.parentNode.removeChild(element);
+    });
+    similarPreview.forEach(({ url, likes, comments }) => {
+      const previewElement = similarPreviewPicture.cloneNode(true);
+      previewElement.querySelector('.picture__img').src = url;
+      previewElement.querySelector('.picture__likes').textContent = likes;
+      previewElement.querySelector('.picture__comments').textContent = comments.length;
+      pictureListElement.appendChild(previewElement);
+    });
+    pictureListElement.appendChild(pictureListFragment);
+  };
 
-  pictureListElement.appendChild(pictureListFragment);
+  createPreviewPhoto();
+
+  // const RERENDER_DELAY = 500;
+
+  // debounce(
+  //   createPreviewPhoto(),
+  //   RERENDER_DELAY,
+  // );
 
   //поиск миниатюр
   const previewPictures = document.querySelectorAll('.picture');
@@ -94,4 +106,5 @@ const getPost = (posts) => {
     });
   });
 };
-export { getPost };
+
+export { createPost };
