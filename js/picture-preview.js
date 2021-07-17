@@ -31,13 +31,6 @@ const createPost = (arrayPosts) => {
 
   createPreviewPhoto();
 
-  // const RERENDER_DELAY = 500;
-
-  // debounce(
-  //   createPreviewPhoto(),
-  //   RERENDER_DELAY,
-  // );
-
   //поиск миниатюр
   const previewPictures = document.querySelectorAll('.picture');
 

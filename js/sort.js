@@ -1,17 +1,18 @@
 import { createPost } from './picture-preview.js';
 import { getRandomNumber } from './util.js';
+import { debounce } from './utils/debounce.js';
 
-let originalArrayposts = [];
+let originalArrayPosts = [];
 
 const getPost = (posts) => {
 
-  originalArrayposts = posts;
+  originalArrayPosts = posts;
 
-  createPost(originalArrayposts);
+  createPost(originalArrayPosts);
 
   //Сортировка по количеству комментариев
   const sortingComments = () => {
-    const arrayPosts = originalArrayposts.slice();
+    const arrayPosts = originalArrayPosts.slice();
     arrayPosts.sort((first, second) => second.comments.length - first.comments.length);
     return arrayPosts;
   };
@@ -19,10 +20,10 @@ const getPost = (posts) => {
   //10 случайных не повторяющихся постов
   const countElementArray = 10;
   const minValue = 0;
-  const maxValue = originalArrayposts.length - 1;
+  const maxValue = originalArrayPosts.length - 1;
 
   const randomPost = () => {
-    const arrayPosts = originalArrayposts.slice();
+    const arrayPosts = originalArrayPosts.slice();
     function onlyUnique(value, index, self) {
       return self.indexOf(value) === index;
     }
@@ -40,28 +41,35 @@ const getPost = (posts) => {
   const randomItem = form.querySelector('#filter-random');
   const defaultItem = form.querySelector('#filter-default');
 
+  const RERENDER_DELAY = 5000;
+
   const sortFunction = (order) => {
     switch (order) {
       case discussed:
         defaultItem.classList.remove('img-filters__button--active');
         randomItem.classList.remove('img-filters__button--active');
         discussed.classList.add('img-filters__button--active');
-        return createPost(sortingComments());
+        createPost(sortingComments());
+        break;
       case randomItem:
         defaultItem.classList.remove('img-filters__button--active');
         discussed.classList.remove('img-filters__button--active');
-        return createPost(randomPost());
+        randomItem.classList.add('img-filters__button--active');
+        createPost(randomPost());
+        break;
       case defaultItem:
         randomItem.classList.remove('img-filters__button--active');
         discussed.classList.remove('img-filters__button--active');
         defaultItem.classList.add('img-filters__button--active');
-        return createPost(originalArrayposts);
+        createPost(originalArrayPosts);
+        break;
     }
   };
 
-  form.addEventListener('click', (evt) => {
-    sortFunction(evt.target);
-  });
+  form.addEventListener('click', debounce(
+    (evt) => sortFunction(evt.target),
+    RERENDER_DELAY),
+  );
 };
 
 export { getPost };

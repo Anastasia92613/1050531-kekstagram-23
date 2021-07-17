@@ -18,5 +18,4 @@ function debounce (callback, timeoutDelay = 500) {
     // пока действие совершается чаще, чем переданная задержка timeoutDelay
   };
 }
-
-export {debounce};
+export { debounce };
