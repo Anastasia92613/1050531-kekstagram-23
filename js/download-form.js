@@ -143,7 +143,10 @@ hashTagsInput.addEventListener('keydown', (evt) => {
 form.addEventListener('submit', (evt) => {
   evt.preventDefault();
   // const formData = new FormData(evt.target);
-  sendPost(new FormData(evt.target));
+  sendPost(
+    delClassForm,
+    new FormData(evt.target),
+  );
 });
 
 export { delClassForm };
