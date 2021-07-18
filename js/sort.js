@@ -41,7 +41,7 @@ const getPost = (posts) => {
   const randomItem = form.querySelector('#filter-random');
   const defaultItem = form.querySelector('#filter-default');
 
-  const RERENDER_DELAY = 5000;
+  const RERENDER_DELAY = 500;
 
   const sortFunction = (order) => {
     switch (order) {
