@@ -2,8 +2,18 @@
 import { getPost } from './sort.js';
 import { showAlert, showAlertErr } from './util.js';
 
-//Получение картинок с сервера
+const templateAlertOk = document.querySelector('#success');
+const formOk = '.success';
+const successOk = 'success';
+const buttonOk = 'success__button';
+const templateAlertErr = document.querySelector('#error');
+const formErr = '.error';
+const successErr = 'error';
+const buttonErr = 'error__button';
 const filters = document.querySelector('.img-filters');
+
+//Получение картинок с сервера
+
 const getPosts = () => {
   fetch('https://23.javascript.pages.academy/kekstagram/data')
 
@@ -20,16 +30,6 @@ const getPosts = () => {
     });
 };
 getPosts();
-
-const templateAlertOk = document.querySelector('#success');
-const formOk = '.success';
-const successOk = 'success';
-const buttonOk = 'success__button';
-
-const templateAlertErr = document.querySelector('#error');
-const formErr = '.error';
-const successErr = 'error';
-const buttonErr = 'error__button';
 
 const sendPost = (closeForm, body) => {
   fetch(

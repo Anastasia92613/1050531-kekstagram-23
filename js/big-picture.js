@@ -1,4 +1,4 @@
-import { buttonClose, isEscEvent } from './util.js';
+import { сloseForm, isEscEvent } from './util.js';
 import './slider.js';
 
 const bigPicture = document.querySelector('.big-picture');
@@ -6,23 +6,6 @@ const commentCount = bigPicture.querySelector('.social__comment-count');
 const commentView = bigPicture.querySelector('.comments-count--view');
 const modalOpen = document.querySelector('body');
 const bigPictureCancel = document.querySelector('.big-picture__cancel');
-
-//Удаление классов для закрытия большого изображаения
-function deliClassPhoto() {
-  bigPicture.classList.add('hidden');
-  commentCount.classList.remove('hidden');
-  modalOpen.classList.remove('modal-open');
-}
-
-
-//Открытие большого изображения
-const openingBigPicture = function () {
-  bigPicture.classList.remove('hidden');
-  modalOpen.classList.add('modal-open');
-  document.removeEventListener('keydown', buttonClose(bigPictureCancel, deliClassPhoto), isEscEvent(deliClassPhoto));
-};
-
-//Подставление создание комментариев
 const picture = bigPicture.querySelector('.big-picture__img');
 const urlBigPicture = picture.querySelector('img');
 const likesBigPicture = bigPicture.querySelector('.likes-count');
@@ -32,6 +15,22 @@ const socialComment = bigPicture.querySelector('.social__comment');
 const descriptionPhoto = bigPicture.querySelector('.social__caption');
 const commentsLoader = document.querySelector('.comments-loader');
 
+//Удаление классов для закрытия большого изображаения
+const deleteClassPhoto = () => {
+  bigPicture.classList.add('hidden');
+  commentCount.classList.remove('hidden');
+  modalOpen.classList.remove('modal-open');
+};
+
+
+//Открытие большого изображения
+const openingBigPicture = function () {
+  bigPicture.classList.remove('hidden');
+  modalOpen.classList.add('modal-open');
+  document.removeEventListener('keydown', сloseForm(bigPictureCancel, deleteClassPhoto), isEscEvent(deleteClassPhoto));
+};
+
+//Подставление создание комментариев
 const getBigPicture = function (url, countLikes, countComm, comments, description) {
   urlBigPicture.src = url;
   likesBigPicture.textContent = countLikes;
@@ -66,4 +65,4 @@ const countingСomments = (count, countView) => {
   }
 };
 
-export { openingBigPicture, getBigPicture, getComment, deliClassPhoto, addComments, countingСomments, getCountComment };
+export { openingBigPicture, getBigPicture, getComment, addComments, countingСomments, getCountComment };

@@ -5,23 +5,26 @@ const formSizePicture = document.querySelector('.img-upload__scale');
 const buttonSmallPicture = formSizePicture.querySelector('.scale__control--smaller');
 const buttonBigPicture = formSizePicture.querySelector('.scale__control--bigger');
 const valueSizePicture = formSizePicture.querySelector('.scale__control--value');
-const transforPicture = document.querySelector('.img-upload__preview');
 const RANGE_MIN = 25;
 const RANGE_MAX = 100;
 const STEP = 25;
-
+const effectLevel = document.querySelector('.img-upload__effect-level');
+const formEffects = document.querySelector('.img-upload__effects');
+const picture = document.querySelector('.img-upload__preview').children[0];
+const sliderEffect = document.querySelector('.effect-level__slider');
+const handleEffect = document.querySelector('.effect-level__value');
 let reduceCurrentValue = '';
 
 const getReduceValue = () => {
   const value = +valueSizePicture.value.replace('%', '');
   if (value <= RANGE_MIN) {
     reduceCurrentValue = RANGE_MIN;
-    valueSizePicture.value = `${RANGE_MIN}%`;
-    transforPicture.style.transform = `scale(${RANGE_MIN / 100})`;
+    valueSizePicture.value = `${RANGE_MIN }%`;
+    picture.style.transform = `scale(${RANGE_MIN / 100})`;
   } else {
     reduceCurrentValue = value - STEP;
     valueSizePicture.value = `${value - STEP}%`;
-    transforPicture.style.transform = `scale(${(value - STEP) / 100})`;
+    picture.style.transform = `scale(${(value - STEP) / 100})`;
   }
   return reduceCurrentValue;
 };
@@ -31,37 +34,28 @@ const getZoomValue = () => {
   if (value >= RANGE_MAX) {
     reduceCurrentValue = RANGE_MAX;
     valueSizePicture.value = `${RANGE_MAX}%`;
-    transforPicture.style.transform = `scale(${RANGE_MAX / 100})`;
+    picture.style.transform = `scale(${RANGE_MAX / 100})`;
   } else {
     reduceCurrentValue = value + STEP;
     valueSizePicture.value = `${value + STEP}%`;
-    transforPicture.style.transform = `scale(${(value + STEP) / 100})`;
+    picture.style.transform = `scale(${(value + STEP) / 100})`;
   }
   return reduceCurrentValue;
 };
 
-const clickArrowRemove = () => {
+const listenerСlickArrowRemove = () => {
   buttonSmallPicture.removeEventListener('click', getReduceValue);
   buttonBigPicture.removeEventListener('click', getZoomValue);
-  valueSizePicture.value = `${RANGE_MAX}%`;
 };
 
-clickArrowRemove();
-
-const clickArrow = () => {
+const listenerСlickArrow = () => {
+  valueSizePicture.value = `${RANGE_MAX}%`;
+  picture.style.transform = `scale(${RANGE_MAX / 100})`;
   buttonBigPicture.addEventListener('click', getZoomValue);
   buttonSmallPicture.addEventListener('click', getReduceValue);
 };
 
-clickArrow();
-
 //Работа с фильтрами
-const formEffects = document.querySelector('.img-upload__effects');
-const picture = document.querySelector('.img-upload__preview').children[0];
-const sliderEffect = document.querySelector('.effect-level__slider');
-const handleEffect = document.querySelector('.effect-level__value');
-
-
 noUiSlider.create(sliderEffect, {
   range: {
     min: 0,
@@ -93,7 +87,7 @@ const rangeMin = {
 };
 
 const rangeMax = {
-  none: 0,
+  none: 10,
   marvin: 100,
   phobos: 3,
   heat: 3,
@@ -109,7 +103,7 @@ const start = {
   sepia: 1,
 };
 const step = {
-  none: 0,
+  none: 1,
   marvin: 1,
   phobos: 0.1,
   heat: 0.1,
@@ -121,7 +115,7 @@ let currentEffect = 'none';
 
 const resetFilter = () => {
   currentEffect = 'none';
-  sliderEffect.classList.add('hidden');
+  effectLevel.classList.add('hidden');
   picture.style.filter = currentEffect;
 };
 
@@ -131,9 +125,17 @@ const changeFilter = (evt) => {
   picture.classList.add(className);
   currentEffect = evt.target.value;
   if (currentEffect === 'none') {
-    sliderEffect.classList.add('hidden');
+    effectLevel.classList.add('hidden');
+    sliderEffect.noUiSlider.updateOptions({
+      range: {
+        min: rangeMin[currentEffect],
+        max: rangeMax[currentEffect],
+      },
+      start: start[currentEffect],
+      step: step[currentEffect],
+    });
   } else {
-    sliderEffect.classList.remove('hidden');
+    effectLevel.classList.remove('hidden');
     sliderEffect.noUiSlider.updateOptions({
       range: {
         min: rangeMin[currentEffect],
@@ -161,4 +163,4 @@ sliderEffect.noUiSlider.on('update', (value, hadle, unencoded) => {
 
 });
 
-export {resetFilter};
+export {resetFilter, listenerСlickArrowRemove, listenerСlickArrow };

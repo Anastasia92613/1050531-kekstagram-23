@@ -1,5 +1,8 @@
+const ALERT_SHOW_TIME = 5000;
+const KEY_ESC= 27;
+
 //получение рандомного числа из диапазона
-function getRandomNumber(min, max) {
+const getRandomNumber = (min, max) => {
   if (min < 0) {
     min = min * -1;
   }
@@ -15,21 +18,21 @@ function getRandomNumber(min, max) {
     min = 0;
   }
   return Math.floor(Math.random() * (max - min + 1)) + min;
-}
+};
 
 //источник метода для возврата целого числа https://myrusakov.ru/js-random-numbers.html
 
 //проверка на максимальную длину строки
-function stringLength(string, max) {
+const checkStringLength = (string, max) => {
   const COUNT = string.length;
-  if (COUNT <= max) {
+  if (COUNT >= max) {
     return true;
   }
   return false;
-}
+};
 
 //Кнопка закрытия
-const buttonClose = (selector, removeClass) => {
+const сloseForm = (selector, removeClass) => {
   selector.addEventListener('click', () => {
     removeClass();
   });
@@ -38,21 +41,13 @@ const buttonClose = (selector, removeClass) => {
 //Закрытие по Esc
 const isEscEvent = (removeClass) => {
   document.addEventListener('keydown', (evt) => {
-    if (evt.keyCode === 27) {
+    if (evt.keyCode === KEY_ESC) {
       removeClass();
     }
   });
 };
 
-
-// const getArray = (someObject) => {
-//   Object.fromEntries(someObject);
-//   return someObject;
-// };
-
 //Сообщение при ошибке загрузки превью
-const ALERT_SHOW_TIME = 5000;
-
 const showAlertErr = (message) => {
   const alertContainer = document.createElement('div');
   alertContainer.style.zIndex = 100;
@@ -74,6 +69,11 @@ const showAlertErr = (message) => {
   }, ALERT_SHOW_TIME);
 };
 
+//Выделение инпута цветов
+const colouringBorder = (border) => {
+  border.style.borderColor = 'red';
+};
+
 //Сообщение при отправке формы
 const showAlert = (templateAlert, classOk, success, button) => {
   const alert = templateAlert.cloneNode(true);
@@ -85,10 +85,10 @@ const showAlert = (templateAlert, classOk, success, button) => {
     }
   });
   document.addEventListener('keydown', (evt) => {
-    if (evt.keyCode === 27) {
+    if (evt.keyCode === KEY_ESC) {
       form.remove();
     }
   });
 };
 
-export { getRandomNumber, stringLength, buttonClose, isEscEvent, showAlertErr, showAlert};
+export { getRandomNumber, checkStringLength, сloseForm, isEscEvent, showAlertErr, showAlert, colouringBorder, KEY_ESC};

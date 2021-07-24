@@ -1,5 +1,5 @@
 import { createPost } from './picture-preview.js';
-import { getRandomNumber } from './util.js';
+// import { getRandomNumber } from './util.js';
 import { debounce } from './utils/debounce.js';
 
 let originalArrayPosts = [];
@@ -11,7 +11,7 @@ const getPost = (posts) => {
   createPost(originalArrayPosts);
 
   //Сортировка по количеству комментариев
-  const sortingComments = () => {
+  const sortComments = () => {
     const arrayPosts = originalArrayPosts.slice();
     arrayPosts.sort((first, second) => second.comments.length - first.comments.length);
     return arrayPosts;
@@ -20,20 +20,20 @@ const getPost = (posts) => {
   //10 случайных не повторяющихся постов
   const countElementArray = 10;
   const minValue = 0;
-  const maxValue = originalArrayPosts.length - 1;
+  // const maxValue = originalArrayPosts.length - 1;
 
-  const randomPost = () => {
+  const getRandomPost = () => {
     const arrayPosts = originalArrayPosts.slice();
-    function onlyUnique(value, index, self) {
-      return self.indexOf(value) === index;
-    }
-    const unique = arrayPosts.filter(onlyUnique);
-    const randomArray = [];
-    for (let index = 0; randomArray.length < countElementArray; index++) {
-      const random = getRandomNumber(minValue, maxValue);
-      randomArray.push(unique[random]);
-    }
-    return randomArray;
+    const uniques = Array.from(new Set(arrayPosts));
+    const randomArrays = uniques.slice(minValue, countElementArray);
+    // const getOnlyUnique = (value, index, self) => self.indexOf(value) === index;
+    // const uniques = arrayPosts.filter(getOnlyUnique);
+    // const randomArrays = [];
+    // for (let index = 0; randomArrays.length < countElementArray; index++) {
+    //   const random = getRandomNumber(minValue, maxValue);
+    //   randomArrays.push(uniques[random]);
+    // }
+    return randomArrays;
   };
 
   const form = document.querySelector('.img-filters__form');
@@ -49,13 +49,13 @@ const getPost = (posts) => {
         defaultItem.classList.remove('img-filters__button--active');
         randomItem.classList.remove('img-filters__button--active');
         discussed.classList.add('img-filters__button--active');
-        createPost(sortingComments());
+        createPost(sortComments());
         break;
       case randomItem:
         defaultItem.classList.remove('img-filters__button--active');
         discussed.classList.remove('img-filters__button--active');
         randomItem.classList.add('img-filters__button--active');
-        createPost(randomPost());
+        createPost(getRandomPost());
         break;
       case defaultItem:
         randomItem.classList.remove('img-filters__button--active');

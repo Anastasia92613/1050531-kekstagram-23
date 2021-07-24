@@ -3,15 +3,18 @@ import './slider.js';
 // import { debounce } from './utils/debounce.js';
 
 let clickIndex = 0;
-let similarPreview = [];
+let similarPreviews = [];
 
 const createPost = (arrayPosts) => {
-  similarPreview = arrayPosts;
+  similarPreviews = arrayPosts;
 
   //Создание превью
   const pictureListElement = document.querySelector('.pictures');
   const similarPreviewPicture = document.querySelector('#picture').content.querySelector('.picture');
   const pictureListFragment = document.createDocumentFragment();
+  const previewPictures = document.querySelectorAll('.picture');
+  const commentsLoader = document.querySelector('.comments-loader');
+  const countComment = 5;
 
   //перебор массива и создание превью
   const createPreviewPhoto = () => {
@@ -19,7 +22,7 @@ const createPost = (arrayPosts) => {
     test.forEach((element) => {
       element.parentNode.removeChild(element);
     });
-    similarPreview.forEach(({ url, likes, comments }) => {
+    similarPreviews.forEach(({ url, likes, comments }) => {
       const previewElement = similarPreviewPicture.cloneNode(true);
       previewElement.querySelector('.picture__img').src = url;
       previewElement.querySelector('.picture__likes').textContent = likes;
@@ -31,26 +34,21 @@ const createPost = (arrayPosts) => {
 
   createPreviewPhoto();
 
-  //поиск миниатюр
-  const previewPictures = document.querySelectorAll('.picture');
-
-  const commentsLoader = document.querySelector('.comments-loader');
-  let comIndex = 0;
-  const countComment = 5;
-
   //Подсчет количества показанных комментариев
-  const coutigComm = (count) => {
+  const calculateComm = (count) => {
     getCountComment(count);
   };
 
   //Создание пяти комментариев
+  let comIndex = 0;
+
   const createFiveComment = (comments) => {
     const fragment = document.createDocumentFragment();
     const commentList = comments.slice(comIndex, countComment + comIndex);
     if (comments.length <= countComment + comIndex) {
-      coutigComm(comments.length);
+      calculateComm(comments.length);
     } else {
-      coutigComm(countComment + comIndex);
+      calculateComm(countComment + comIndex);
     }
     commentList.forEach((comment) => fragment.appendChild(getComment(comment.message, comment.avatar, comment.name)));
     countingСomments(comments.length, countComment + comIndex);
@@ -60,7 +58,7 @@ const createPost = (arrayPosts) => {
   //Создание фрагмента с комментариями
   const createFragmentComments = () => {
     const postComments = [];
-    similarPreview.forEach((post) => {
+    similarPreviews.forEach((post) => {
       postComments.push(createFiveComment(post.comments));
     });
     return postComments;
@@ -68,15 +66,15 @@ const createPost = (arrayPosts) => {
 
   commentsLoader.addEventListener('click', () => {
     comIndex += countComment;
-    const lastFiveComment = createFiveComment(similarPreview[clickIndex].comments);
+    const lastFiveComment = createFiveComment(similarPreviews[clickIndex].comments);
     addComments(lastFiveComment);
   });
 
   //Добавление описание к фото
   const createDescriptionPhoto = () => {
-    const descriptionsPhoto = [];
-    similarPreview.forEach((post) => descriptionsPhoto.push(post.description));
-    return descriptionsPhoto;
+    const descriptionsPhotos = [];
+    similarPreviews.forEach((post) => descriptionsPhotos.push(post.description));
+    return descriptionsPhotos;
   };
 
   previewPictures.forEach((preview, index) => {
