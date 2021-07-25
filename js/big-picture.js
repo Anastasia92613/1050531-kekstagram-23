@@ -24,7 +24,7 @@ const deleteClassPhoto = () => {
 
 
 //Открытие большого изображения
-const openingBigPicture = function () {
+const openBigPicture = function () {
   bigPicture.classList.remove('hidden');
   modalOpen.classList.add('modal-open');
   document.removeEventListener('keydown', сloseForm(bigPictureCancel, deleteClassPhoto), isEscEvent(deleteClassPhoto));
@@ -65,4 +65,4 @@ const countingСomments = (count, countView) => {
   }
 };
 
-export { openingBigPicture, getBigPicture, getComment, addComments, countingСomments, getCountComment };
+export { openBigPicture, getBigPicture, getComment, addComments, countingСomments, getCountComment };

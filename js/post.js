@@ -3,13 +3,13 @@ import { getRandomNumber } from './util.js';
 
 //Создание случайного поста в Кекстограмме
 const createPost = (key) => {
-  const randomLengthArray = new Array(getRandomNumber(1, 10)).fill(null);
+  const randomLengthArrays = new Array(getRandomNumber(1, 10)).fill(null);
   return {
     id: key,
     url: `photos/${getRandomNumber(1, 25)}.jpg`,
     description: DESCRIPTION_PHOTO[getRandomNumber(0, 10)],
     likes: getRandomNumber(15, 200),
-    comments: randomLengthArray.map(() => ({
+    comments: randomLengthArrays.map(() => ({
       id: getRandomNumber(1, 25),
       avatar: `img/avatar-${getRandomNumber(1, 6)}.svg`,
       message: MESSAGE[getRandomNumber(0, 5)] + MESSAGE[getRandomNumber(0, 5)],

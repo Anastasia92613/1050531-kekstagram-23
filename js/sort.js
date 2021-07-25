@@ -5,6 +5,11 @@ import { debounce } from './utils/debounce.js';
 let originalArrayPosts = [];
 
 const getPost = (posts) => {
+  const form = document.querySelector('.img-filters__form');
+  const discussed = form.querySelector('#filter-discussed');
+  const randomItem = form.querySelector('#filter-random');
+  const defaultItem = form.querySelector('#filter-default');
+  const RERENDER_DELAY = 500;
 
   originalArrayPosts = posts;
 
@@ -35,13 +40,6 @@ const getPost = (posts) => {
     // }
     return randomArrays;
   };
-
-  const form = document.querySelector('.img-filters__form');
-  const discussed = form.querySelector('#filter-discussed');
-  const randomItem = form.querySelector('#filter-random');
-  const defaultItem = form.querySelector('#filter-default');
-
-  const RERENDER_DELAY = 500;
 
   const sortFunction = (order) => {
     switch (order) {

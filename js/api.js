@@ -1,4 +1,3 @@
-// import { getPost } from './picture-preview.js';
 import { getPost } from './sort.js';
 import { showAlert, showAlertErr } from './util.js';
 

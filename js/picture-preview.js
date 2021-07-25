@@ -1,4 +1,4 @@
-import { openingBigPicture, getBigPicture, getComment, addComments, countingСomments, getCountComment } from './big-picture.js';
+import { openBigPicture, getBigPicture, getComment, addComments, countingСomments, getCountComment } from './big-picture.js';
 import './slider.js';
 // import { debounce } from './utils/debounce.js';
 
@@ -6,15 +6,15 @@ let clickIndex = 0;
 let similarPreviews = [];
 
 const createPost = (arrayPosts) => {
-  similarPreviews = arrayPosts;
-
   //Создание превью
   const pictureListElement = document.querySelector('.pictures');
   const similarPreviewPicture = document.querySelector('#picture').content.querySelector('.picture');
   const pictureListFragment = document.createDocumentFragment();
-  const previewPictures = document.querySelectorAll('.picture');
   const commentsLoader = document.querySelector('.comments-loader');
   const countComment = 5;
+  let comIndex = 0;
+
+  similarPreviews = arrayPosts;
 
   //перебор массива и создание превью
   const createPreviewPhoto = () => {
@@ -40,8 +40,6 @@ const createPost = (arrayPosts) => {
   };
 
   //Создание пяти комментариев
-  let comIndex = 0;
-
   const createFiveComment = (comments) => {
     const fragment = document.createDocumentFragment();
     const commentList = comments.slice(comIndex, countComment + comIndex);
@@ -77,25 +75,30 @@ const createPost = (arrayPosts) => {
     return descriptionsPhotos;
   };
 
-  previewPictures.forEach((preview, index) => {
-    preview.addEventListener('click', () => {
-      comIndex = 0;
-      clickIndex = index;
-      openingBigPicture();
-      const imageSRC = preview.querySelector('.picture__img').src;
-      const countLikes = preview.querySelector('.picture__likes').textContent;
-      const countComm = preview.querySelector('.picture__comments').textContent;
-      const fragmentComments = createFragmentComments()[index];
-      const descriptionPhoto = createDescriptionPhoto()[index];
-      if (countComm <= countComment) {
-        getCountComment(countComm);
-      } else {
-        getCountComment(countComment);
-      }
-      getBigPicture(imageSRC, countLikes, countComm, fragmentComments, descriptionPhoto);
-      countingСomments(countComm, countComment);
+  const listenerClickPreview = () => {
+    const previewPictures = document.querySelectorAll('.picture');
+    previewPictures.forEach((preview, index) => {
+      preview.addEventListener('click', () => {
+        comIndex = 0;
+        clickIndex = index;
+        openBigPicture();
+        const imageSRC = preview.querySelector('.picture__img').src;
+        const countLikes = preview.querySelector('.picture__likes').textContent;
+        const countComm = preview.querySelector('.picture__comments').textContent;
+        const fragmentComments = createFragmentComments()[index];
+        const descriptionPhoto = createDescriptionPhoto()[index];
+        if (countComm <= countComment) {
+          getCountComment(countComm);
+        } else {
+          getCountComment(countComment);
+        }
+        getBigPicture(imageSRC, countLikes, countComm, fragmentComments, descriptionPhoto);
+        countingСomments(countComm, countComment);
+      });
     });
-  });
+  };
+
+  listenerClickPreview();
 };
 
 export { createPost };
